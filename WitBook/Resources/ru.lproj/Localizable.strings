@@ -1,0 +1,18 @@
+/* 
+  Localizable.strings
+  WitBook
+
+  Created by Nariman Nogaibayev on 16.12.2024.
+  
+*/
+
+"common.application.name" = "WitBook";
+
+"welcome.content.option1" = "1.Создавайте список книг";
+"welcome.content.option2" = "2.Пишите заметки";
+"welcome.content.option3" = "3.Отслеживайте прогресс";
+"welcome.content.option4" = "4.Ведите журнал";
+"welcome.content.option5" = "5.Читайте эффективнее";
+"welcome.content.option6" = "6.Задавайте вопросы";
+"welcome.content.option7" = "7.Получайте ответы";
+"welcome.button.title" = "Войти или Зарегистрироваться";
