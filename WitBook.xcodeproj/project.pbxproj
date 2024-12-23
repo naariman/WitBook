@@ -11,7 +11,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		4F45483B2D050793003A8181 /* Exceptions for "WitBook" folder in "WitBook" target */ = {
+		4F574EF22D18085500047063 /* Exceptions for "WitBook" folder in "WitBook" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Resources/Info.plist,
@@ -24,7 +24,7 @@
 		4F4547ED2D04FE4A003A8181 /* WitBook */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				4F45483B2D050793003A8181 /* Exceptions for "WitBook" folder in "WitBook" target */,
+				4F574EF22D18085500047063 /* Exceptions for "WitBook" folder in "WitBook" target */,
 			);
 			path = WitBook;
 			sourceTree = "<group>";

@@ -16,11 +16,8 @@ class AuthenticationInteractor {
 }
 
 extension AuthenticationInteractor: AuthenticationInteractorInput {
-    func setItems() {
-        <#code#>
-    }
-    
-    func didTapContinueButton() {
-        <#code#>
-    }
+
+    func setItems() {}
+
+    func didTapContinueButton() {}
 }

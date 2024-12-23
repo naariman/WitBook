@@ -9,5 +9,6 @@
 protocol AuthenticationViewInput: BaseViewInput {
 
     func pass(items: [AuthenticationItem])
+    func pass(buttonTitle: String)
     func routeToDashboard()
 }

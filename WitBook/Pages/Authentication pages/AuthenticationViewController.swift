@@ -13,6 +13,7 @@ class AuthenticationViewController: BaseViewController {
     var interactor: AuthenticationInteractorInput?
     var router: AuthenticationRouterInput?
 
+    private let navigationBar = BaseNavigationBar()
     private let tableView = UITableView(frame: .zero, style: .grouped)
     private let continueButton = BaseButton()
 
@@ -46,21 +47,22 @@ class AuthenticationViewController: BaseViewController {
 
         continueButton.translatesAutoresizingMaskIntoConstraints = false
         layoutConstraints += [
-            continueButton.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            continueButton.leftAnchor.constraint(equalTo: view.leftAnchor),
-            continueButton.rightAnchor.constraint(equalTo: view.rightAnchor)
+            continueButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -48),
+            continueButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16),
+            continueButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16)
         ]
 
     	NSLayoutConstraint.activate(layoutConstraints)
     }
 
     private func stylize() {
-
+        view.backgroundColor = .white
     }
 
     private func setActions() {
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.register(BaseContentCell<UILabel>.self)
         continueButton.addTarget(
             self,
             action: #selector(didTapContinueButton),
@@ -81,6 +83,10 @@ extension AuthenticationViewController: AuthenticationViewInput {
         tableView.reloadData()
     }
 
+    func pass(buttonTitle: String) {
+        continueButton.title = buttonTitle
+    }
+
     func routeToDashboard() {
         router?.routeToDashboard()
     }
@@ -89,11 +95,28 @@ extension AuthenticationViewController: AuthenticationViewInput {
 extension AuthenticationViewController: UITableViewDataSource,
                                         UITableViewDelegate {
 
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let item = items[indexPath.row]
+
+        switch item.id {
+        case .titleLabel:
+            let cell: BaseContentCell<UILabel> = tableView.dequeueReusableCell(for: indexPath)
+            cell.view.text = item.title
+            cell.view.font = .medium20
+            cell.view.textColor = BaseColor.primary400
+            cell.setMargin(top: 48)
+            cell.setMargin(left: 16)
+            return cell
+
+        default: return UITableViewCell()
+        }
+    }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         items.count
     }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        UITableView.automaticDimension
     }
 }

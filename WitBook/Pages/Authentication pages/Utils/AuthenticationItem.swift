@@ -16,6 +16,7 @@ struct AuthenticationItem {
         case noAccountButton
     }
 
+    var id: Identifier
     var title: String? = nil
     var placeholder: String? = nil
 }

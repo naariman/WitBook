@@ -7,6 +7,4 @@
 
 import Foundation
 
-protocol BaseViewInput where Self: BaseViewControllerProtocol {
-    
-}
+protocol BaseViewInput where Self: BaseViewControllerProtocol {}

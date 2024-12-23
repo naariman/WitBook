@@ -11,8 +11,19 @@ protocol BaseLayoutConstraintProtocol where Self: UIView { }
 
 extension BaseLayoutConstraintProtocol {
 
-    func getLayoutConstraints(over view: UIView, safe: Bool = true, margin: CGFloat) -> [NSLayoutConstraint] {
-        return getLayoutConstraints(over: view, safe: safe, left: margin, top: margin, right: margin, bottom: margin)
+    func getLayoutConstraints(
+        over view: UIView,
+        safe: Bool = true,
+        margin: CGFloat
+    ) -> [NSLayoutConstraint] {
+        return getLayoutConstraints(
+            over: view,
+            safe: safe,
+            left: margin,
+            top: margin,
+            right: margin,
+            bottom: margin
+        )
     }
 
     func getLayoutConstraints(

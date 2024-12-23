@@ -9,4 +9,8 @@ import UIKit
 
 class BaseViewController: UIViewController, BaseViewControllerProtocol {
 
+    private func stylizeNavigationBar() {
+        navigationController?.navigationBar.backIndicatorImage = BaseImage.ic_back.uiImage
+        navigationController?.navigationBar.backIndicatorTransitionMaskImage = BaseImage.ic_back.uiImage
+    }
 }

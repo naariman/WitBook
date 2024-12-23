@@ -12,4 +12,8 @@ extension UIView: BaseLayoutConstraintProtocol {
     func addSubviews(_ subviews: UIView...) {
         subviews.forEach(addSubview)
     }
+
+    static var reuseId: String {
+        String(describing: self)
+    }
 }

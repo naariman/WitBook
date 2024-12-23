@@ -16,3 +16,9 @@
 "welcome.content.option6" = "6.Задавайте вопросы";
 "welcome.content.option7" = "7.Получайте ответы";
 "welcome.button.title" = "Войти или Зарегистрироваться";
+
+"login.title" = "Авторизация";
+"login.no_account" = "У меня нет аккаунта";
+"login.email_placeholder" = "Введите e-mail";
+"login.password_placeholder" = "Введите пароль";
+"login.button.title" = "Войти";

@@ -28,5 +28,7 @@ class AuthenticationRouter<Interactor: AuthenticationInteractorProtocol> {
 }
 
 extension AuthenticationRouter: AuthenticationRouterInput {
-
+    func routeToDashboard() {
+        
+    }
 }
