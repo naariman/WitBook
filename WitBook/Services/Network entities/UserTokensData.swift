@@ -1,5 +1,5 @@
 //
-//  TokensData.swift
+//  UserTokensData.swift
 //  WitBook
 //
 //  Created by Nariman Nogaibayev on 21.12.2024.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct TokensData: Decodable {
+struct UserTokensData: Decodable {
 
     let access_token: String
     let refresh_token: String

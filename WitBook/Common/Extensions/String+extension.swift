@@ -8,8 +8,8 @@
 import Foundation
 
 extension String {
-
-    func localized() -> String {
+    
+    var localized: String {
         let path = Bundle.main.path(forResource: "en", ofType: "lproj")
         let bundle = Bundle(path: path!)
         return NSLocalizedString(self, tableName: "Localizable", bundle: bundle!, value: self, comment: self)

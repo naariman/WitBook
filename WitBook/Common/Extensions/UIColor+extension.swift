@@ -9,15 +9,6 @@ import UIKit
 
 extension UIColor {
 
-    convenience init(rgb: UInt8..., alpha: UInt = 100) {
-        self.init(
-            red: CGFloat(rgb[0]) / 255,
-            green: CGFloat(rgb[1]) / 255,
-            blue: CGFloat(rgb[2]) / 255,
-            alpha: CGFloat(min(alpha, 100)) / 100
-        )
-    }
-
     convenience init?(hex: String) {
         guard hex.hasPrefix("#") else { return nil }
 

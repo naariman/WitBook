@@ -7,10 +7,16 @@
 
 import UIKit
 
-class BaseViewController: UIViewController, BaseViewControllerProtocol {
+protocol BaseViewControllerProtocol where Self: UIViewController {
+    
+    func pass(navigationTitle: String)
+}
 
-    private func stylizeNavigationBar() {
-        navigationController?.navigationBar.backIndicatorImage = BaseImage.ic_back.uiImage
-        navigationController?.navigationBar.backIndicatorTransitionMaskImage = BaseImage.ic_back.uiImage
+extension BaseViewControllerProtocol {
+    
+    func pass(navigationTitle: String) {
+        navigationController?.title = navigationTitle
     }
 }
+
+class BaseViewController: UIViewController, BaseViewControllerProtocol {}

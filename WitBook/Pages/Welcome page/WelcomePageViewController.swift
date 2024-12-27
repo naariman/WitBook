@@ -13,12 +13,11 @@ class WelcomePageViewController: BaseViewController {
     var interactor: WelcomePageInteractorInput?
     var router: WelcomePageRouterInput?
 
-    private let animatedGradientView = BaseBackgroundGradientView()
-    private let continueButton = BaseButton()
-
     private let containerContentView = UIView()
     private let contentTitleLabel = UILabel()
     private let contentStackView = UIStackView()
+    
+    private let continueButton = BaseButton()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +31,6 @@ class WelcomePageViewController: BaseViewController {
     private func addSubviews() {
         view.addSubviews(
             containerContentView,
-            animatedGradientView,
             continueButton
         )
 
@@ -80,22 +78,20 @@ class WelcomePageViewController: BaseViewController {
     private func stylize() {
         view.backgroundColor = .white
 
-        animatedGradientView.center = view.center
-
         containerContentView.backgroundColor = .white
         containerContentView.layer.cornerRadius = 8
         containerContentView.layer.shadowColor = UIColor.black.cgColor.copy(alpha: 0.5)
         containerContentView.layer.shadowOffset = CGSize(width: 0, height: 0)
         containerContentView.layer.shadowOpacity = 0.5
 
-        contentTitleLabel.text = "common.application.name".localized()
+        contentTitleLabel.text = "common.application.name".localized
         contentTitleLabel.font = .semibold32
         contentTitleLabel.textAlignment = .left
         contentTitleLabel.textColor = BaseColor.primary400
 
         contentStackView.axis = .vertical
 
-        continueButton.title = "welcome.button.title".localized()
+        continueButton.title = "welcome.button.title".localized
     }
 
     private func setActions() {
@@ -106,13 +102,13 @@ class WelcomePageViewController: BaseViewController {
         )
 
         let containerContentTexts = [
-            "welcome.content.option1".localized(),
-            "welcome.content.option2".localized(),
-            "welcome.content.option3".localized(),
-            "welcome.content.option4".localized(),
-            "welcome.content.option5".localized(),
-            "welcome.content.option6".localized(),
-            "welcome.content.option7".localized()
+            "welcome.content.option1".localized,
+            "welcome.content.option2".localized,
+            "welcome.content.option3".localized,
+            "welcome.content.option4".localized,
+            "welcome.content.option5".localized,
+            "welcome.content.option6".localized,
+            "welcome.content.option7".localized
         ]
 
         for (index, text) in containerContentTexts.enumerated() {

@@ -2,18 +2,16 @@
 //  UIView+extension.swift
 //  WitBook
 //
-//  Created by Nariman Nogaibayev on 16.12.2024.
+//  Created by rbkusser on 27.12.2024.
 //
 
 import UIKit
 
-extension UIView: BaseLayoutConstraintProtocol {
-
-    func addSubviews(_ subviews: UIView...) {
-        subviews.forEach(addSubview)
-    }
-
-    static var reuseId: String {
-        String(describing: self)
+extension UIView {
+    
+    func addSubviews(_ views: UIView...) {
+        views.forEach {
+            addSubview($0)
+        }
     }
 }
