@@ -30,7 +30,7 @@ class WelcomePageRouter {
 extension WelcomePageRouter: WelcomePageRouterInput {
 
     func routeToLoginPage() {
-        let router = LoginPageRouter(commonStore: .init())
+        let router = AuthenticationPagesRouter<LoginPageInteractor>(commonStore: .init())
         let viewController = router.compose()
         view?.navigationController?.pushViewController(viewController, animated: true)
     }

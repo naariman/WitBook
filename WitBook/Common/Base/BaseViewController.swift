@@ -8,8 +8,7 @@
 import UIKit
 
 protocol BaseViewControllerProtocol where Self: UIViewController {
-    
-    func pass(navigationTitle: String)
+
 }
 
 extension BaseViewControllerProtocol {

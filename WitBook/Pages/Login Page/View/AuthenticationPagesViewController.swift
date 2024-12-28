@@ -1,5 +1,5 @@
 //
-//  LoginPageViewController.swift
+//  AuthenticationPagesViewController.swift
 //  WitBook
 //
 //  Created by rbkusser on 27.12.2024.
@@ -8,18 +8,18 @@
 
 import UIKit
 
-class LoginPageViewController: BaseViewController {
+class AuthenticationPagesViewController: BaseViewController {
     
-    var interactor: LoginPageInteractorInput?
-    var router: LoginPageRouterInput?
+    var interactor: AuthenticationInteractorProtocol?
+    var router: AuthenticationPagesRouterInput?
     
     private let titleLabel = UILabel()
     private let emailTextField = BaseTextField()
     private let passwordTextField = BaseTextField()
     private let noAccountButton = UIButton()
-    private let loginButton = BaseButton()
+    private let continueButton = BaseButton()
     
-    private var loginButtonBottomConstraint = NSLayoutConstraint()
+    private var continueButtonBottomConstraint = NSLayoutConstraint()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,7 +43,7 @@ class LoginPageViewController: BaseViewController {
             emailTextField,
             passwordTextField,
             noAccountButton,
-            loginButton
+            continueButton
         )
     }
     
@@ -79,15 +79,15 @@ class LoginPageViewController: BaseViewController {
             noAccountButton.heightAnchor.constraint(equalToConstant: 16)
         ]
         
-        loginButton.translatesAutoresizingMaskIntoConstraints = false
-        loginButtonBottomConstraint = loginButton.bottomAnchor.constraint(
+        continueButton.translatesAutoresizingMaskIntoConstraints = false
+        continueButtonBottomConstraint = continueButton.bottomAnchor.constraint(
             equalTo: view.bottomAnchor,
             constant: -48
         )
         layoutConstraints += [
-            loginButtonBottomConstraint,
-            loginButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16),
-            loginButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16),
+            continueButtonBottomConstraint,
+            continueButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16),
+            continueButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16),
         ]
         
         NSLayoutConstraint.activate(layoutConstraints)
@@ -96,15 +96,12 @@ class LoginPageViewController: BaseViewController {
     private func stylize() {
         view.backgroundColor = .white
         
-        titleLabel.text = "login.title".localized
         titleLabel.textAlignment = .left
         titleLabel.textColor = BaseColor.primary400
         titleLabel.font = .medium20
         
-        emailTextField.placeholderText = "login.email_placeholder".localized
         emailTextField.keyboardType = .emailAddress
         
-        passwordTextField.placeholderText = "login.password_placeholder".localized
         passwordTextField.isSecureTextEntry = true
         passwordTextField.isRightButtonHidden = false
         
@@ -113,12 +110,11 @@ class LoginPageViewController: BaseViewController {
         noAccountButton.titleLabel?.font = .regular14
         noAccountButton.titleLabel?.textColor = BaseColor.link200
         noAccountButton.contentHorizontalAlignment = .right
-        
-        loginButton.title = "login.button.title".localized
+        noAccountButton.isHidden = true
     }
     
     private func setActions() {
-        loginButton.addTarget(self, action: #selector(didTapLoginButton), for: .touchUpInside)
+        continueButton.addTarget(self, action: #selector(didTapContinueButton), for: .touchUpInside)
         noAccountButton.addTarget(self, action: #selector(didTapNoAccountButton), for: .touchUpInside)
         passwordTextField.rightButtonAction = { [weak self] in
             self?.interactor?.didTapPasswordRightButton()
@@ -140,24 +136,46 @@ class LoginPageViewController: BaseViewController {
     }
 }
 
-extension LoginPageViewController: LoginPageViewInput {
-
-    func pass(passwordRightButtonImage: UIImage) {
-        passwordTextField.rightButtonImage = passwordRightButtonImage.withTintColor(.black)
+extension AuthenticationPagesViewController: AuthenticationPagesViewInput {
+    
+    func pass(title: String) {
+        titleLabel.text = title
     }
     
+    func pass(emailPlaceholder: String) {
+        emailTextField.placeholderText = emailPlaceholder
+    }
+    
+    func pass(passwordPlaceholder: String) {
+        passwordTextField.placeholderText = passwordPlaceholder
+    }
+    
+    func pass(passwordRightButtonSystemName: String) {
+        passwordTextField.rightButtonImage = UIImage(systemName: passwordRightButtonSystemName)?.withTintColor(.black)
+    }
+
     func pass(isPasswordSecureTextEntry: Bool) {
         passwordTextField.isSecureTextEntry = isPasswordSecureTextEntry
     }
+
+    func pass(isNoAccountButtonHidden: Bool) {
+        noAccountButton.isHidden = isNoAccountButtonHidden
+    }
+    
+    func pass(primaryButtonTitle: String) {
+        continueButton.title = primaryButtonTitle
+    }
 }
 
-private extension LoginPageViewController {
+private extension AuthenticationPagesViewController {
     
-    @objc func didTapLoginButton() {
+    @objc func didTapContinueButton() {
         interactor?.didTapLoginButton()
     }
 
-    @objc func didTapNoAccountButton() {}
+    @objc func didTapNoAccountButton() {
+        router?.routeToRegistration(commonStore: .init())
+    }
     
     @objc func didChangeEmailTextField() {
         interactor?.didChangeEmailText(emailTextField.text)
@@ -171,16 +189,16 @@ private extension LoginPageViewController {
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
               let keyboardRectangle = keyboardFrame.cgRectValue
               let keyboardHeight = keyboardRectangle.height
-            loginButtonBottomConstraint.constant = -12 - keyboardHeight
-            UIView.animate(withDuration: 0.3) { [weak self] in
+            continueButtonBottomConstraint.constant = -12 - keyboardHeight
+            UIView.animate(withDuration: 0.25) { [weak self] in
                 self?.view.layoutIfNeeded()
             }
           }
     }
 
     @objc func keyboardWillHide(notification: NSNotification) {
-        loginButtonBottomConstraint.constant = -48
-        UIView.animate(withDuration: 0.3) { [weak self] in
+        continueButtonBottomConstraint.constant = -48
+        UIView.animate(withDuration: 0.25) { [weak self] in
             self?.view.layoutIfNeeded()
         }
     }

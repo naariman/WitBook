@@ -22,3 +22,8 @@
 "login.email_placeholder" = "Введите e-mail";
 "login.password_placeholder" = "Введите пароль";
 "login.button.title" = "Войти";
+
+"registration.title" = "Новый аккаунт";
+"rigistration.email_placeholder" = "Введите e-mail";
+"registration.password_placeholder" = "Придумайте пароль для аккаунта";
+"registration.button.title" = "Зарегистрироваться";
