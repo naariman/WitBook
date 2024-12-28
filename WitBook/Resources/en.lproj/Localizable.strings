@@ -7,6 +7,7 @@
 */
 
 "common.application.name" = "WitBook";
+"common.ok" = "Окей";
 
 "welcome.content.option1" = "1.Создавайте список книг";
 "welcome.content.option2" = "2.Пишите заметки";
@@ -27,3 +28,6 @@
 "rigistration.email_placeholder" = "Введите e-mail";
 "registration.password_placeholder" = "Придумайте пароль для аккаунта";
 "registration.button.title" = "Зарегистрироваться";
+
+"alert.good" = "Хорошо";
+"alert.title" = "Внимание";

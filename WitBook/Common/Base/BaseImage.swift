@@ -10,6 +10,8 @@ import UIKit
 enum BaseImage: String {
     
     case ic_back
+    case ic_bell
+    case ic_close
     
     var uiImage: UIImage? {
         return UIImage(named: self.rawValue, in: .main, compatibleWith: nil)

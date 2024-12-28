@@ -49,6 +49,6 @@ extension LoginPageInteractor: AuthenticationInteractorProtocol {
     }
     
     func didTapLoginButton() {
- 
+        view.showErrorAlert(message: "fwemfewf")
     }
 }
