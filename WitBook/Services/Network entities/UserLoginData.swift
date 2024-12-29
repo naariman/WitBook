@@ -9,6 +9,6 @@ import Foundation
 
 struct UserLoginData: Encodable {
 
-    let email: String
-    let password: String
+    var email: String
+    var password: String
 }

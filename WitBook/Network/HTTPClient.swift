@@ -28,72 +28,59 @@ extension HTTPClient {
         var request = URLRequest(url: url)
         request.httpMethod = endpoint.method.rawValue
         request.allHTTPHeaderFields = endpoint.header
-        request.log()
         
         if let body = endpoint.body {
-            request.httpBody = try? JSONSerialization.data(withJSONObject: body)
+            do {
+                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                request.httpBody = try JSONEncoder().encode(body)
+            } catch {
+                return .failure(.encode)
+            }
         }
+
+        NetworkLogger.logRequest(request)
         
         do {
-            let (data, response) = try await URLSession.shared.data(
-                for: request,
-                delegate: nil
-            )
+            let (data, response) = try await URLSession.shared.data(for: request, delegate: nil)
             
-            guard let response = response as? HTTPURLResponse else {
+            NetworkLogger.logResponse(response, data: data, error: nil)
+            
+            guard let httpResponse = response as? HTTPURLResponse else {
                 return .failure(.noResponse)
             }
             
-            switch response.statusCode {
+            switch httpResponse.statusCode {
             case 200...299:
-                guard let decodedResponse = try? JSONDecoder().decode(
-                    responseModel,
-                    from: data
-                ) else {
+                do {
+                    let decodedResponse = try JSONDecoder().decode(responseModel, from: data)
+                    return .success(decodedResponse)
+                } catch {
                     return .failure(.decode)
                 }
-                return .success(decodedResponse)
-            case 401:
-                let refreshTokensResult = await refreshTokens()
-                
-                switch refreshTokensResult {
-                case .success(let tokens):
-                    try? KeychainManager().save(tokens.access_token, for: .accessToken)
-                    try? KeychainManager().save(tokens.refresh_token, for: .refreshToken)
-                    
-                    var updatedRequest = request
-                    updatedRequest.setValue(
-                        "Bearer \(tokens.access_token)",
-                        forHTTPHeaderField: "Authorization"
-                    )
-                    let (retryData, retryResponse) = try await URLSession.shared.data(
-                        for: updatedRequest,
-                        delegate: nil
-                    )
-                    guard let retryResponse = retryResponse as? HTTPURLResponse else {
-                        return .failure(.noResponse)
-                    }
-                    switch retryResponse.statusCode {
-                    case 200...299:
-                        guard let decodedRetryResponse = try? JSONDecoder().decode(
-                            responseModel,
-                            from: retryData
-                        ) else {
-                            return .failure(.decode)
-                        }
-                        return .success(decodedRetryResponse)
-                    default:
-                        return .failure(.unexpectedStatusCode)
-                    }
-                case .failure(let error):
-                    return .failure(error)
+            case 400...499:
+                if let errorMessage = extractErrorMessage(from: data) {
+                    return .failure(.custom(message: errorMessage))
+                } else {
+                    return .failure(.unexpectedStatusCode)
                 }
             default:
                 return .failure(.unexpectedStatusCode)
             }
         } catch {
+            NetworkLogger.logResponse(nil, data: nil, error: error)
             return .failure(.unknown)
         }
+    }
+    
+    private func extractErrorMessage(from data: Data) -> String? {
+        do {
+            if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+                return json["details"] as? String ?? json["error"] as? String
+            }
+        } catch {
+            return nil
+        }
+        return nil
     }
     
     private func refreshTokens() async -> Result<UserTokensData, NetworkError> {

@@ -9,9 +9,9 @@ import Foundation
 
 enum AuthenticationEndpoint: NetworkEndpoint {
 
-    case register(body: [String: String])
-    case login(body: [String: String])
-    case refresh(body: [String: String])
+    case register(body: Encodable)
+    case login(body: Encodable)
+    case refresh(body: Encodable)
 
     var serverUrl: String {
         return "http://127.0.0.1:8000/"
@@ -35,7 +35,7 @@ enum AuthenticationEndpoint: NetworkEndpoint {
         }
     }
 
-    var body: [String: String]? {
+    var body: Encodable? {
         switch self {
         case .login(body: let body),
              .register(body: let body),

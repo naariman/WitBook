@@ -12,7 +12,7 @@ protocol NetworkEndpoint {
     var serverUrl: String { get }
     var apiUrl: String { get }
     var method: HTTPMethod { get }
-    var body: [String: String]? { get }
+    var body: Encodable? { get }
     var header: [String: String]? { get }
 }
 

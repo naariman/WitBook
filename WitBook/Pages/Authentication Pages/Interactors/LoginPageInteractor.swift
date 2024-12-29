@@ -12,6 +12,8 @@ class LoginPageInteractor {
 
     unowned let view: AuthenticationPagesViewInput
     unowned let commonStore: CommonStore
+    private let authenticationService = AuthenticationService()
+    private var dataToSend = UserLoginData(email: "", password: "")
     
     var isPasswordTextFieldSecured: Bool = true
 
@@ -35,20 +37,36 @@ extension LoginPageInteractor: AuthenticationInteractorProtocol {
         view.pass(isNoAccountButtonHidden: false)
     }
     
-    func didChangeEmailText(_ text: String?) {}
+    func didChangeEmailText(_ text: String?) {
+        dataToSend.email = text ?? ""
+    }
     
-    func didChangePasswordText(_ text: String?) {}
+    func didChangePasswordText(_ text: String?) {
+        dataToSend.password = text ?? ""
+    }
     
     func didTapPasswordRightButton() {
         isPasswordTextFieldSecured.toggle()
+        view.pass(isPasswordSecureTextEntry: isPasswordTextFieldSecured)
         let systemName = isPasswordTextFieldSecured ? "eye" : "eye.slash"
         if let _ = UIImage(systemName: systemName) {
             view.pass(passwordRightButtonSystemName: systemName)
-            view.pass(isPasswordSecureTextEntry: isPasswordTextFieldSecured)
         }
     }
     
-    func didTapLoginButton() {}
+    @MainActor
+    func didTapLoginButton() {
+        Task {
+            let result = await authenticationService.login(data: dataToSend)
+            switch result {
+            case .success(let response):
+                try KeychainManager().save(response.access_token, for: .accessToken)
+                try KeychainManager().save(response.refresh_token, for: .refreshToken)
+            case .failure(let error):
+                view.showErrorAlert(message: error.errorDescription)
+            }
+        }
+    }
     
     func didTapNoAccountButton() {
         view.routeToRegistrationPage(commonStore: commonStore)
