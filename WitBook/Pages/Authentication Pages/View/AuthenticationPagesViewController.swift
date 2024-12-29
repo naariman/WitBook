@@ -165,6 +165,10 @@ extension AuthenticationPagesViewController: AuthenticationPagesViewInput {
     func pass(primaryButtonTitle: String) {
         continueButton.title = primaryButtonTitle
     }
+    
+    func routeToRegistrationPage(commonStore: CommonStore) {
+        router?.routeToRegistration(commonStore: commonStore)
+    }
 }
 
 private extension AuthenticationPagesViewController {
@@ -174,7 +178,7 @@ private extension AuthenticationPagesViewController {
     }
 
     @objc func didTapNoAccountButton() {
-        router?.routeToRegistration(commonStore: .init())
+        interactor?.didTapNoAccountButton()
     }
     
     @objc func didChangeEmailTextField() {

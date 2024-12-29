@@ -6,17 +6,25 @@
 
 import UIKit
 
-class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+class SceneDelegate: UIResponder,
+                     UIWindowSceneDelegate {
 
     var window: UIWindow?
+    private let commonStore = CommonStore()
 
-    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+    func scene(
+        _ scene: UIScene,
+        willConnectTo session: UISceneSession,
+        options connectionOptions: UIScene.ConnectionOptions
+    ) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
         let window = UIWindow(windowScene: windowScene)
-        let viewController = AuthenticationPagesRouter<LoginPageInteractor>(commonStore: .init()).compose()
-        window.rootViewController = UINavigationController(rootViewController: viewController)
         self.window = window
+
+        let router = WelcomePageRouter(commonStore: commonStore)
+        let viewController = router.compose()
+        window.rootViewController = UINavigationController(rootViewController: viewController)
         window.makeKeyAndVisible()
     }
 }

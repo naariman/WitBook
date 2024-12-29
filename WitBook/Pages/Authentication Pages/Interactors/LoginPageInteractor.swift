@@ -48,7 +48,9 @@ extension LoginPageInteractor: AuthenticationInteractorProtocol {
         }
     }
     
-    func didTapLoginButton() {
-        view.showErrorAlert(message: "fwemfewf")
+    func didTapLoginButton() {}
+    
+    func didTapNoAccountButton() {
+        view.routeToRegistrationPage(commonStore: commonStore)
     }
 }

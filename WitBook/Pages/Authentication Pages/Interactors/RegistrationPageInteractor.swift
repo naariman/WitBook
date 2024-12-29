@@ -39,7 +39,7 @@ extension RegistrationPageInteractor: AuthenticationInteractorProtocol {
     
     func didTapPasswordRightButton() {}
     
-    func didTapLoginButton() {
-        view.showErrorAlert(message: "efewf")
-    }
+    func didTapLoginButton() {}
+    
+    func didTapNoAccountButton() {}
 }

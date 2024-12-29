@@ -14,6 +14,7 @@ protocol AuhtenticationInteractorInput {
     func didChangePasswordText(_ text: String?)
     func didTapPasswordRightButton()
     func didTapLoginButton()
+    func didTapNoAccountButton()
 }
 
 protocol AuthenticationInteractorProtocol: AuhtenticationInteractorInput {

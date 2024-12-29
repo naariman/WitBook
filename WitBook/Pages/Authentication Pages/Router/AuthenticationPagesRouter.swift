@@ -19,7 +19,7 @@ class AuthenticationPagesRouter<Interactor: AuthenticationInteractorProtocol> {
         let viewController = AuthenticationPagesViewController()
         view = viewController
         
-        viewController.interactor = Interactor(view: viewController, commonStore: .init())
+        viewController.interactor = Interactor(view: viewController, commonStore: commonStore)
         viewController.router = self
 
         return viewController
@@ -27,14 +27,12 @@ class AuthenticationPagesRouter<Interactor: AuthenticationInteractorProtocol> {
 }
 
 extension AuthenticationPagesRouter: AuthenticationPagesRouterInput {
-    func routeToDashboard(commonStore: CommonStore) {
-//        let router = DashboardPageRouter(commonStore: commonStore)
-//        let viewController = router.compose()
-    }
+
+    func routeToDashboard(commonStore: CommonStore) {}
     
     func routeToRegistration(commonStore: CommonStore) {
-        let router = AuthenticationPagesRouter<RegistrationPageInteractor>(commonStore: .init())
+        let router = AuthenticationPagesRouter<RegistrationPageInteractor>(commonStore: commonStore)
         let viewController = router.compose()
-        view?.navigationController?.pushViewController(viewController, animated: true)
+        view?.push(viewController: viewController)
     }
 }
