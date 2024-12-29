@@ -14,7 +14,7 @@ enum AuthenticationEndpoint: NetworkEndpoint {
     case refresh(body: [String: String])
 
     var serverUrl: String {
-        return "https://witbook.ddns.net/"
+        return "http://127.0.0.1:8000/"
     }
 
     var apiUrl: String {

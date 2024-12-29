@@ -53,5 +53,6 @@ extension BaseViewControllerProtocol {
 class BaseViewController: UIViewController, BaseViewControllerProtocol {
 
     var baseModalPresentationStyle: UIModalPresentationStyle { .overFullScreen }
-    var baseModalTransitionStyle: UIModalTransitionStyle { modalTransitionStyle }
+//    var baseModalTransitionStyle: UIModalTransitionStyle { modalTransitionStyle }
+    
 }
