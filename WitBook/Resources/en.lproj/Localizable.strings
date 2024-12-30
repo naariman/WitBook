@@ -8,6 +8,7 @@
 
 "common.application.name" = "WitBook";
 "common.ok" = "Окей";
+"common.continue" = "Продолжить";
 
 "welcome.content.option1" = "1.Создавайте список книг";
 "welcome.content.option2" = "2.Пишите заметки";
@@ -31,3 +32,12 @@
 
 "alert.good" = "Хорошо";
 "alert.title" = "Внимание";
+
+"photo_source_picker.title" = "Выберите откуда использовать фото";
+"photo_source_picker.from_library" = "Галерея";
+"photo_source_picker.from_camera" = "Камера";
+
+"update_profile.profile_photo" = "Фото профиля";
+"update_profile.title" = "Ваш профиль";
+"update_profile.name_placeholder" = "Как вас зовут?";
+"update_profile.continue" = "Как вас зовут?";

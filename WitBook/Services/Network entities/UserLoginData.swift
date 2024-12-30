@@ -11,4 +11,9 @@ struct UserLoginData: Encodable {
 
     var email: String
     var password: String
+    
+    init() {
+        email = ""
+        password = ""
+    }
 }

@@ -22,7 +22,7 @@ class SceneDelegate: UIResponder,
         let window = UIWindow(windowScene: windowScene)
         self.window = window
 
-        let router = WelcomePageRouter(commonStore: commonStore)
+        let router = UpdateProfilePageRouter(commonStore: commonStore)
         let viewController = router.compose()
         window.rootViewController = UINavigationController(rootViewController: viewController)
         window.makeKeyAndVisible()

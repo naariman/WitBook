@@ -18,4 +18,6 @@ protocol AuthenticationPagesViewInput: BaseViewInput {
     func pass(isNoAccountButtonHidden: Bool)
     func pass(primaryButtonTitle: String)
     func routeToRegistrationPage(commonStore: CommonStore)
+    func routeToTabBarPages(commonStore: CommonStore)
+    func routeToUpdateProfilePage(commonStore: CommonStore)
 }

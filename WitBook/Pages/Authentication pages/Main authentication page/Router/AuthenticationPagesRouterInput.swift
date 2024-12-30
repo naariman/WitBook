@@ -8,6 +8,7 @@
 
 protocol AuthenticationPagesRouterInput: AnyObject {
     
-    func routeToDashboard(commonStore: CommonStore)
+    func routeToTabBarPages(commonStore: CommonStore)
     func routeToRegistration(commonStore: CommonStore)
+    func routeToUpdateProfilePage(commonStore: CommonStore)
 }

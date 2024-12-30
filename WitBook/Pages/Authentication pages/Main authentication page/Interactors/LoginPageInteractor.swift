@@ -13,7 +13,7 @@ class LoginPageInteractor {
     unowned let view: AuthenticationPagesViewInput
     unowned let commonStore: CommonStore
     private let authenticationService = AuthenticationService()
-    private var dataToSend = UserLoginData(email: "", password: "")
+    private var dataToSend = UserLoginData()
     
     var isPasswordTextFieldSecured: Bool = true
 
@@ -44,8 +44,8 @@ extension LoginPageInteractor: AuthenticationInteractorProtocol {
     func didChangePasswordText(_ text: String?) {
         dataToSend.password = text ?? ""
     }
-    
-    func didTapPasswordRightButton() {
+
+    func didTapTextFieldPasswordButton() {
         isPasswordTextFieldSecured.toggle()
         view.pass(isPasswordSecureTextEntry: isPasswordTextFieldSecured)
         let systemName = isPasswordTextFieldSecured ? "eye" : "eye.slash"
@@ -53,8 +53,7 @@ extension LoginPageInteractor: AuthenticationInteractorProtocol {
             view.pass(passwordRightButtonSystemName: systemName)
         }
     }
-    
-    @MainActor
+
     func didTapLoginButton() {
         Task {
             let result = await authenticationService.login(data: dataToSend)
@@ -62,12 +61,15 @@ extension LoginPageInteractor: AuthenticationInteractorProtocol {
             case .success(let response):
                 try KeychainManager().save(response.access_token, for: .accessToken)
                 try KeychainManager().save(response.refresh_token, for: .refreshToken)
+                view.routeToTabBarPages(commonStore: commonStore)
             case .failure(let error):
-                view.showErrorAlert(message: error.errorDescription)
+                DispatchQueue.main.async { [weak self] in
+                    self?.view.showErrorAlert(message: error.errorDescription)
+                }
             }
         }
     }
-    
+
     func didTapNoAccountButton() {
         view.routeToRegistrationPage(commonStore: commonStore)
     }

@@ -117,7 +117,7 @@ class AuthenticationPagesViewController: BaseViewController {
         continueButton.addTarget(self, action: #selector(didTapContinueButton), for: .touchUpInside)
         noAccountButton.addTarget(self, action: #selector(didTapNoAccountButton), for: .touchUpInside)
         passwordTextField.rightButtonAction = { [weak self] in
-            self?.interactor?.didTapPasswordRightButton()
+            self?.interactor?.didTapTextFieldPasswordButton()
         }
         NotificationCenter.default.addObserver(
             self,
@@ -168,6 +168,14 @@ extension AuthenticationPagesViewController: AuthenticationPagesViewInput {
     
     func routeToRegistrationPage(commonStore: CommonStore) {
         router?.routeToRegistration(commonStore: commonStore)
+    }
+    
+    func routeToTabBarPages(commonStore: CommonStore) {
+        router?.routeToTabBarPages(commonStore: commonStore)
+    }
+    
+    func routeToUpdateProfilePage(commonStore: CommonStore) {
+        router?.routeToUpdateProfilePage(commonStore: commonStore)
     }
 }
 

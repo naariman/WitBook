@@ -6,6 +6,8 @@
 //  Copyright (c) 2024 ___ORGANIZATIONNAME___. All rights reserved.
 //
 
+import UIKit
+
 class AuthenticationPagesRouter<Interactor: AuthenticationInteractorProtocol> {
 
     private unowned let commonStore: CommonStore
@@ -28,11 +30,20 @@ class AuthenticationPagesRouter<Interactor: AuthenticationInteractorProtocol> {
 
 extension AuthenticationPagesRouter: AuthenticationPagesRouterInput {
 
-    func routeToDashboard(commonStore: CommonStore) {}
+    func routeToTabBarPages(commonStore: CommonStore) {
+        let tabBarViewController = MainTabBarController(commonStore: commonStore)
+        view?.present(viewController: tabBarViewController)
+    }
     
     func routeToRegistration(commonStore: CommonStore) {
         let router = AuthenticationPagesRouter<RegistrationPageInteractor>(commonStore: commonStore)
         let viewController = router.compose()
         view?.push(viewController: viewController)
+    }
+    
+    func routeToUpdateProfilePage(commonStore: CommonStore) {
+        let router = UpdateProfilePageRouter(commonStore: commonStore)
+        let viewController = router.compose()
+        view?.present(viewController: viewController)
     }
 }

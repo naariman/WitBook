@@ -58,6 +58,10 @@ extension BaseViewControllerProtocol {
         
         navigationController?.pushViewController(viewController, animated: animated)
     }
+    
+    func present(viewController: UIViewController, animated: Bool = true) {
+        navigationController?.present(viewController, animated: animated)
+    }
 }
 
 class BaseViewController: UIViewController, BaseViewControllerProtocol {

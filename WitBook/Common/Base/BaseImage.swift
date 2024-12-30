@@ -12,7 +12,10 @@ enum BaseImage: String {
     case ic_back
     case ic_bell
     case ic_close
-    
+    case ic_dashboard
+    case ic_profile
+    case ic_add_photo_placeholder
+
     var uiImage: UIImage? {
         return UIImage(named: self.rawValue, in: .main, compatibleWith: nil)
     }
