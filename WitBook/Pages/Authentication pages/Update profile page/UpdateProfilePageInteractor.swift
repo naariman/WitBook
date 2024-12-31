@@ -9,6 +9,8 @@
 class UpdateProfilePageInteractor {
 
     private unowned let view: UpdateProfilePageViewInput
+    
+    private var dataToSend = UserUpdateData()
 
     init(view: UpdateProfilePageViewInput) {
         self.view = view
@@ -17,6 +19,9 @@ class UpdateProfilePageInteractor {
 
 extension UpdateProfilePageInteractor: UpdateProfilePageInteractorInput {
     
-    func didChangeNameText(_ text: String?) {}
+    func didChangeNameText(_ text: String?) {
+        dataToSend.username = text
+    }
+
     func didTapContinueButton() {}
 }

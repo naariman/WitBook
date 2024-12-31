@@ -77,6 +77,14 @@ class BaseAlertViewController: BaseViewController {
         return button
     }()
     
+    private let alertAdditionalButton: BaseButton = {
+        let button = BaseButton()
+        button.layer.borderWidth = 1
+        button.backgroundColor = .clear
+        button.layer.borderColor = BaseColor.primary400?.cgColor
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -148,6 +156,9 @@ class BaseAlertViewController: BaseViewController {
     }
     
     @objc private func primaryButtonTapped() {
+        if let action {
+            action()
+        }
         dismissAlert()
     }
     

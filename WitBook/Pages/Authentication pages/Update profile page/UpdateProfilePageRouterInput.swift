@@ -9,4 +9,5 @@
 protocol UpdateProfilePageRouterInput: AnyObject {
 
     func routeToDashbord(commonStore: CommonStore)
+    func presentPhotoPickerSourceOptionsBottomSheet()
 }

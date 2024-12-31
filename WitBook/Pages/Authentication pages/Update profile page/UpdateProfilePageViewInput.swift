@@ -6,6 +6,12 @@
 //  Copyright (c) 2024 ___ORGANIZATIONNAME___. All rights reserved.
 //
 
-protocol UpdateProfilePageViewInput: BaseViewInput {
+import UIKit
 
+protocol UpdateProfilePageViewInput: BaseViewInput {
+    
+    func didSelectPickerSource(
+        _ picker: PhotoSourcePickerViewController,
+        didSelect source: UIImagePickerController.SourceType
+    )
 }

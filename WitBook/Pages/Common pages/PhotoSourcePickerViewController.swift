@@ -8,6 +8,7 @@
 import UIKit
 
 protocol PhotoSourcePickerDelegate: AnyObject {
+
     func photoSourcePicker(_ picker: PhotoSourcePickerViewController, didSelect source: UIImagePickerController.SourceType)
 }
 
@@ -42,14 +43,14 @@ class PhotoSourcePickerViewController: UIViewController {
         view.backgroundColor = .white
         
         titleLabel.textAlignment = .center
-        titleLabel.font = .semibold24
+        titleLabel.font = .semibold16
         titleLabel.text = "photo_source_picker.title".localized
         titleLabel.textColor = BaseColor.primary400
         
         fromLibraryButton.title = "photo_source_picker.from_library".localized
         fromCameraButton.title = "photo_source_picker.from_camera".localized
         
-        buttonsStackView.axis = .vertical
+        buttonsStackView.axis = .horizontal
         buttonsStackView.spacing = 16
         buttonsStackView.alignment = .fill
         buttonsStackView.distribution = .fillEqually

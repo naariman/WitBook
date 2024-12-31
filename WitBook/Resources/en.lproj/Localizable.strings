@@ -41,3 +41,5 @@
 "update_profile.title" = "Ваш профиль";
 "update_profile.name_placeholder" = "Как вас зовут?";
 "update_profile.continue" = "Как вас зовут?";
+"update_profile.alert_access_title" = "Нужен доступ к фото";
+"update_profile.alert_access_description" = "Пожалуйста, дайте разрешение на использование фото в настройках";

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import PhotosUI
 
 class UpdateProfilePageViewController: BaseViewController {
 
@@ -94,6 +95,9 @@ class UpdateProfilePageViewController: BaseViewController {
     }
 
     private func setActions() {
+        view.addTapGesture { [weak self] in
+            self?.view.endEditing(true)
+        }
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(keyboardWillShow(notification:)),
@@ -106,29 +110,102 @@ class UpdateProfilePageViewController: BaseViewController {
             name: UIResponder.keyboardWillHideNotification,
             object: nil
         )
+        nameTextField.addTarget(self, action: #selector(didChangeNameTextField), for: .editingChanged)
+        pickerPlacholderView.addTapGesture { [weak self] in
+            self?.router?.presentPhotoPickerSourceOptionsBottomSheet()
+        }
     }
 }
 
-extension UpdateProfilePageViewController: UpdateProfilePageViewInput {}
+extension UpdateProfilePageViewController: UpdateProfilePageViewInput {
+    
+    func didSelectPickerSource(
+        _ picker: PhotoSourcePickerViewController,
+        didSelect source: UIImagePickerController.SourceType
+    ) {
+        picker.dismiss(animated: true) { [weak self] in
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            
+            switch source {
+            case .photoLibrary:
+                PHPhotoLibrary.requestAuthorization { status in
+                    DispatchQueue.main.async {
+                        if status == .authorized {
+                            imagePicker.sourceType = .photoLibrary
+                            self?.present(imagePicker, animated: true)
+                        } else {
+                            self?.showPhotoOrCameraAccessAlert()
+                        }
+                    }
+                }
+            case .camera:
+                AVCaptureDevice.requestAccess(for: .video) { granted in
+                    DispatchQueue.main.async {
+                        if granted {
+                            if UIImagePickerController.isSourceTypeAvailable(.camera) {
+                                imagePicker.sourceType = .camera
+                                self?.present(imagePicker, animated: true)
+                            }
+                        } else {
+                            self?.showPhotoOrCameraAccessAlert()
+                        }
+                    }
+                }
+            case .savedPhotosAlbum:
+                break
+            @unknown default: break
+            }
+        }
+    }
+}
+
+extension UpdateProfilePageViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+    
+    func imagePickerController(
+        _ picker: UIImagePickerController,
+        didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]
+    ) {
+          if let selectedImage = info[.originalImage] as? UIImage {
+              pickerPlacholderView.image = selectedImage
+          }
+          picker.dismiss(animated: true)
+    }
+}
 
 
 private extension UpdateProfilePageViewController {
     
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-              let keyboardRectangle = keyboardFrame.cgRectValue
-              let keyboardHeight = keyboardRectangle.height
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            let keyboardHeight = keyboardRectangle.height
             continueButtonBottomConstraint.constant = -12 - keyboardHeight
             UIView.animate(withDuration: 0.25) { [weak self] in
                 self?.view.layoutIfNeeded()
             }
-          }
+        }
     }
-
+    
     @objc func keyboardWillHide(notification: NSNotification) {
         continueButtonBottomConstraint.constant = -48
         UIView.animate(withDuration: 0.25) { [weak self] in
             self?.view.layoutIfNeeded()
         }
+    }
+    
+    @objc func didChangeNameTextField(_ text: String?) {
+        interactor?.didChangeNameText(text)
+    }
+    
+    func showPhotoOrCameraAccessAlert() {
+        let title = "update_profile.alert_access_title".localized
+        let message = "update_profile.alert_access_description".localized
+        let action = {
+            if let url = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(url)
+            }
+        }
+        showAlert(title: title, message: message, action: action)
     }
 }

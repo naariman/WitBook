@@ -114,6 +114,9 @@ class AuthenticationPagesViewController: BaseViewController {
     }
     
     private func setActions() {
+        view.addTapGesture { [weak self] in
+            self?.view.endEditing(true)
+        }
         continueButton.addTarget(self, action: #selector(didTapContinueButton), for: .touchUpInside)
         noAccountButton.addTarget(self, action: #selector(didTapNoAccountButton), for: .touchUpInside)
         passwordTextField.rightButtonAction = { [weak self] in

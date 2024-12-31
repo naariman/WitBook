@@ -79,11 +79,11 @@ class PickerPlaceholderView: UIView {
         topLineView.backgroundColor = BaseColor.primary200
         topLineView.layer.cornerRadius = 8
         topLineView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+        
+        imageView.contentMode = .scaleAspectFill
     }
 
-    private func setActions() {
-        
-    }
+    private func setActions() {}
 
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 }

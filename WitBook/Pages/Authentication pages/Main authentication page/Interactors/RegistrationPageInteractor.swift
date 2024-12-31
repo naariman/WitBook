@@ -53,9 +53,7 @@ extension RegistrationPageInteractor: AuthenticationInteractorProtocol {
 
                 view.routeToUpdateProfilePage(commonStore: commonStore)
             case .failure(let error):
-                DispatchQueue.main.async { [weak self] in
-                    self?.view.showErrorAlert(message: error.localizedDescription)
-                }
+                view.showErrorAlert(message: error.errorDescription)
             }
         }
     }

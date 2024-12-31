@@ -63,9 +63,7 @@ extension LoginPageInteractor: AuthenticationInteractorProtocol {
                 try KeychainManager().save(response.refresh_token, for: .refreshToken)
                 view.routeToTabBarPages(commonStore: commonStore)
             case .failure(let error):
-                DispatchQueue.main.async { [weak self] in
-                    self?.view.showErrorAlert(message: error.errorDescription)
-                }
+                view.showErrorAlert(message: error.errorDescription)
             }
         }
     }

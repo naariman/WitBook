@@ -15,11 +15,14 @@ extension BaseViewControllerProtocol {
         image: UIImage? = BaseImage.ic_bell.uiImage?.withTintColor(BaseColor.primary400 ?? .black),
         title: String? = "alert.title".localized,
         message: String?,
-        buttonTitle: String? = "common.ok".localized
+        buttonTitle: String? = "common.ok".localized,
+        action: (() -> Void)? = nil
     ) {
-        let viewController = BaseAlertViewController()
-        viewController.set(image: image, title: title, message: message, buttonTitle: buttonTitle)
-        present(alertController: viewController)
+        DispatchQueue.main.async { [weak self] in
+            let viewController = BaseAlertViewController()
+            viewController.set(image: image, title: title, message: message, buttonTitle: buttonTitle, action: action)
+            self?.present(alertController: viewController)
+        }
     }
     
     func showErrorAlert(
@@ -28,10 +31,12 @@ extension BaseViewControllerProtocol {
         message: String?,
         buttonTitle: String? = "common.ok".localized
     ) {
-        let viewController = BaseAlertViewController()
-        viewController.set(image: image, title: title, message: message, buttonTitle: buttonTitle)
-        viewController.set(titleLabelTextColor: BaseColor.error ?? .black)
-        present(alertController: viewController)
+        DispatchQueue.main.async { [weak self] in
+            let viewController = BaseAlertViewController()
+            viewController.set(image: image, title: title, message: message, buttonTitle: buttonTitle)
+            viewController.set(titleLabelTextColor: BaseColor.error ?? .black)
+            self?.present(alertController: viewController)
+        }
     }
     
     private func present(alertController: BaseAlertViewController) {
@@ -67,5 +72,4 @@ extension BaseViewControllerProtocol {
 class BaseViewController: UIViewController, BaseViewControllerProtocol {
 
     var baseModalPresentationStyle: UIModalPresentationStyle { .overFullScreen }
-    var baseModalTransitionStyle: UIModalTransitionStyle { modalTransitionStyle }
 }
