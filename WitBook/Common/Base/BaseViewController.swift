@@ -55,7 +55,7 @@ extension BaseViewControllerProtocol {
         backButtonImage.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
         backButtonView.addSubview(backButtonImage)
         
-        backButtonView.frame.size.width = backButtonImage.frame.width + 16
+        backButtonView.frame.size.width = backButtonImage.frame.width + 24
         
         let backBarButtonItem = UIBarButtonItem(customView: backButtonView)
         

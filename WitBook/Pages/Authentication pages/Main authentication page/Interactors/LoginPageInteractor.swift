@@ -12,7 +12,6 @@ class LoginPageInteractor {
 
     unowned let view: AuthenticationPagesViewInput
     unowned let commonStore: CommonStore
-    private let authenticationService = AuthenticationService()
     private var dataToSend = UserLoginData()
     
     var isPasswordTextFieldSecured: Bool = true
@@ -26,7 +25,7 @@ class LoginPageInteractor {
     }
 }
 
-extension LoginPageInteractor: AuthenticationInteractorProtocol {
+extension LoginPageInteractor: AuthenticationInteractorProtocol, HTTPClient {
     
     func viewDidLoad() {
         view.pass(passwordRightButtonSystemName: "eye")
@@ -54,13 +53,16 @@ extension LoginPageInteractor: AuthenticationInteractorProtocol {
         }
     }
 
-    func didTapLoginButton() {
-        Task {
-            let result = await authenticationService.login(data: dataToSend)
+    func didTapPrimaryButton() {
+        let endpoint = AuthenticationEndpoint.login(body: dataToSend)
+
+        sendRequest(endpoint: endpoint) { [weak self] (result: Result<UserTokensData, NetworkError>) in
+            guard let self else { return }
+
             switch result {
             case .success(let response):
-                try KeychainManager().save(response.access_token, for: .accessToken)
-                try KeychainManager().save(response.refresh_token, for: .refreshToken)
+                try? KeychainManager().save(response.access_token, for: .accessToken)
+                try? KeychainManager().save(response.refresh_token, for: .refreshToken)
                 view.routeToTabBarPages(commonStore: commonStore)
             case .failure(let error):
                 view.showErrorAlert(message: error.errorDescription)

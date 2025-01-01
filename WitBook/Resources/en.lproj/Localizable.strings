@@ -43,3 +43,6 @@
 "update_profile.continue" = "Как вас зовут?";
 "update_profile.alert_access_title" = "Нужен доступ к фото";
 "update_profile.alert_access_description" = "Пожалуйста, дайте разрешение на использование фото в настройках";
+
+"dashboard.title" = "Главная";
+"profile.title" = "Профиль";

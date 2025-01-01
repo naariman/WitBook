@@ -13,9 +13,8 @@ protocol AuhtenticationInteractorInput {
     func didChangeEmailText(_ text: String?)
     func didChangePasswordText(_ text: String?)
     func didTapTextFieldPasswordButton()
-    func didTapLoginButton()
+    func didTapPrimaryButton()
     func didTapNoAccountButton()
-    func didTapRegisterButton()
     
 }
 
@@ -33,7 +32,5 @@ protocol AuthenticationInteractorProtocol: AuhtenticationInteractorInput {
 extension AuthenticationInteractorProtocol {
 
     func didTapTextFieldPasswordButton() {}
-    func didTapLoginButton() {}
     func didTapNoAccountButton() {}
-    func didTapRegisterButton() {}
 }

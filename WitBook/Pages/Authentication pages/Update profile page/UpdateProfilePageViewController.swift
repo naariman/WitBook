@@ -168,6 +168,7 @@ extension UpdateProfilePageViewController: UIImagePickerControllerDelegate & UIN
     ) {
           if let selectedImage = info[.originalImage] as? UIImage {
               pickerPlacholderView.image = selectedImage
+              interactor?.pass(selectedImage)
           }
           picker.dismiss(animated: true)
     }

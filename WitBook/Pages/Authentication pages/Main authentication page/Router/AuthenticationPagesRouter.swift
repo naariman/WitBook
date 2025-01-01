@@ -32,6 +32,7 @@ extension AuthenticationPagesRouter: AuthenticationPagesRouterInput {
 
     func routeToTabBarPages(commonStore: CommonStore) {
         let tabBarViewController = MainTabBarController(commonStore: commonStore)
+    
         view?.present(viewController: tabBarViewController)
     }
     

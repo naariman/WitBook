@@ -11,7 +11,6 @@ class RegistrationPageInteractor {
 
     unowned let view: AuthenticationPagesViewInput
     unowned let commonStore: CommonStore
-    private let networkService = AuthenticationService()
     private var dataToSend = UserRegistrationData()
     
     var isPasswordTextFieldSecured: Bool = true
@@ -25,7 +24,7 @@ class RegistrationPageInteractor {
     }
 }
 
-extension RegistrationPageInteractor: AuthenticationInteractorProtocol {
+extension RegistrationPageInteractor: AuthenticationInteractorProtocol, HTTPClient {
     
     func viewDidLoad() {
         view.pass(passwordRightButtonSystemName: "eye")
@@ -43,15 +42,17 @@ extension RegistrationPageInteractor: AuthenticationInteractorProtocol {
         dataToSend.password = text ?? ""
     }
     
-    func didTapRegisterButton() {
-        Task {
-            let result = await networkService.register(data: dataToSend)
-            switch result {
-            case  .success(let response):
-                try KeychainManager().save(response.access_token, for: .accessToken)
-                try KeychainManager().save(response.refresh_token, for: .refreshToken)
+    func didTapPrimaryButton() {
+        let endpoint = AuthenticationEndpoint.register(body: dataToSend)
 
-                view.routeToUpdateProfilePage(commonStore: commonStore)
+        sendRequest(endpoint: endpoint) { [weak self] (result: Result<UserTokensData, NetworkError>) in
+            guard let self else { return }
+
+            switch result {
+            case .success(let response):
+                try? KeychainManager().save(response.access_token, for: .accessToken)
+                try? KeychainManager().save(response.refresh_token, for: .refreshToken)
+                view.routeToTabBarPages(commonStore: commonStore)
             case .failure(let error):
                 view.showErrorAlert(message: error.errorDescription)
             }

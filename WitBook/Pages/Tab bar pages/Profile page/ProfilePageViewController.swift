@@ -36,7 +36,7 @@ class ProfilePageViewController: BaseViewController {
     }
 
     private func stylize() {
-
+        view.backgroundColor = .white
     }
 
     private func setActions() {
