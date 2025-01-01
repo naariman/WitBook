@@ -8,6 +8,6 @@
 
 protocol UpdateProfilePageRouterInput: AnyObject {
 
-    func routeToDashbord(commonStore: CommonStore)
     func presentPhotoPickerSourceOptionsBottomSheet()
+    func routeToTabBarPages(commonStore: CommonStore)
 }

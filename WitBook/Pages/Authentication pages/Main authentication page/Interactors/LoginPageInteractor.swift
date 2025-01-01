@@ -53,12 +53,11 @@ extension LoginPageInteractor: AuthenticationInteractorProtocol, HTTPClient {
         }
     }
 
-    func didTapPrimaryButton() {
+    func didTapContinueButton() {
         let endpoint = AuthenticationEndpoint.login(body: dataToSend)
 
         sendRequest(endpoint: endpoint) { [weak self] (result: Result<UserTokensData, NetworkError>) in
             guard let self else { return }
-
             switch result {
             case .success(let response):
                 try? KeychainManager().save(response.access_token, for: .accessToken)

@@ -13,7 +13,7 @@ protocol AuhtenticationInteractorInput {
     func didChangeEmailText(_ text: String?)
     func didChangePasswordText(_ text: String?)
     func didTapTextFieldPasswordButton()
-    func didTapPrimaryButton()
+    func didTapContinueButton()
     func didTapNoAccountButton()
     
 }

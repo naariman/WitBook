@@ -13,25 +13,46 @@ class UpdateProfilePageInteractor {
     private unowned let view: UpdateProfilePageViewInput
     
     private var dataToSend = UserUpdateData()
+    private unowned let commonStore: CommonStore
 
-    init(view: UpdateProfilePageViewInput) {
+    init(
+        view: UpdateProfilePageViewInput,
+        commonStore: CommonStore
+    ) {
         self.view = view
+        self.commonStore = commonStore
     }
 }
 
-extension UpdateProfilePageInteractor: UpdateProfilePageInteractorInput {
+extension UpdateProfilePageInteractor: UpdateProfilePageInteractorInput, HTTPClient {
     
     func didChangeNameText(_ text: String?) {
         dataToSend.username = text
     }
     
     func pass(_ image: UIImage) {
-        if let data = image.jpegData(compressionQuality: 0.8) {
+        if let data = image.jpegData(compressionQuality: 0.3) {
             dataToSend.avatar = data
         }
     }
     
     func didTapContinueButton() {
+        let endpoint = ProfileEndpoints.updateProfile(body: dataToSend.fields)
+        let multipartData = dataToSend.toMultipartData()
         
+        sendMultipartRequest(
+            endpoint: endpoint,
+            multipartData: multipartData
+        ) { [weak self] (result: Result<EmptyResponse, NetworkError>) in
+            guard let self else { return }
+            
+            switch result {
+            case .success:
+                view.routeToTabBarPages(commonStore: commonStore)
+            case .failure(let error):
+                view.showErrorAlert(message: error.errorDescription)
+                
+            }
+        }
     }
 }

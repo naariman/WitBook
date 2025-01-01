@@ -31,8 +31,8 @@ class AuthenticationPagesRouter<Interactor: AuthenticationInteractorProtocol> {
 extension AuthenticationPagesRouter: AuthenticationPagesRouterInput {
 
     func routeToTabBarPages(commonStore: CommonStore) {
-        let tabBarViewController = MainTabBarController(commonStore: commonStore)
-    
+        let tabBarViewController = UINavigationController(rootViewController: MainTabBarController(commonStore: commonStore)) 
+        tabBarViewController.modalPresentationStyle = .overFullScreen
         view?.present(viewController: tabBarViewController)
     }
     
@@ -44,7 +44,8 @@ extension AuthenticationPagesRouter: AuthenticationPagesRouterInput {
     
     func routeToUpdateProfilePage(commonStore: CommonStore) {
         let router = UpdateProfilePageRouter(commonStore: commonStore)
-        let viewController = router.compose()
+        let viewController = UINavigationController(rootViewController: router.compose())
+        viewController.modalPresentationStyle = .overFullScreen
         view?.present(viewController: viewController)
     }
 }

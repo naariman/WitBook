@@ -54,13 +54,10 @@ extension BaseViewControllerProtocol {
         backButtonImage.contentMode = .scaleAspectFit
         backButtonImage.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
         backButtonView.addSubview(backButtonImage)
-        
         backButtonView.frame.size.width = backButtonImage.frame.width + 24
-        
+        backButtonImage.center.y = backButtonView.frame.height / 2
         let backBarButtonItem = UIBarButtonItem(customView: backButtonView)
-        
         navigationItem.backBarButtonItem = backBarButtonItem
-        
         navigationController?.pushViewController(viewController, animated: animated)
     }
     

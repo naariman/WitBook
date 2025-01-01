@@ -7,6 +7,8 @@
 
 import Foundation
 
+import UIKit
+
 class RegistrationPageInteractor {
 
     unowned let view: AuthenticationPagesViewInput
@@ -42,17 +44,25 @@ extension RegistrationPageInteractor: AuthenticationInteractorProtocol, HTTPClie
         dataToSend.password = text ?? ""
     }
     
-    func didTapPrimaryButton() {
+    func didTapTextFieldPasswordButton() {
+        isPasswordTextFieldSecured.toggle()
+        view.pass(isPasswordSecureTextEntry: isPasswordTextFieldSecured)
+        let systemName = isPasswordTextFieldSecured ? "eye" : "eye.slash"
+        if let _ = UIImage(systemName: systemName) {
+            view.pass(passwordRightButtonSystemName: systemName)
+        }
+    }
+    
+    func didTapContinueButton() {
         let endpoint = AuthenticationEndpoint.register(body: dataToSend)
 
         sendRequest(endpoint: endpoint) { [weak self] (result: Result<UserTokensData, NetworkError>) in
             guard let self else { return }
-
             switch result {
             case .success(let response):
                 try? KeychainManager().save(response.access_token, for: .accessToken)
                 try? KeychainManager().save(response.refresh_token, for: .refreshToken)
-                view.routeToTabBarPages(commonStore: commonStore)
+                view.routeToUpdateProfilePage(commonStore: commonStore)
             case .failure(let error):
                 view.showErrorAlert(message: error.errorDescription)
             }

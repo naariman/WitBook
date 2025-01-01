@@ -21,7 +21,7 @@ class UpdateProfilePageRouter {
         let viewController = UpdateProfilePageViewController()
         view = viewController
 
-        let interactor = UpdateProfilePageInteractor(view: viewController)
+        let interactor = UpdateProfilePageInteractor(view: viewController, commonStore: commonStore)
         viewController.interactor = interactor
         viewController.router = self
 
@@ -30,6 +30,13 @@ class UpdateProfilePageRouter {
 }
 
 extension UpdateProfilePageRouter: UpdateProfilePageRouterInput {
+
+    func routeToTabBarPages(commonStore: CommonStore) {
+        let tabBarViewController = UINavigationController(rootViewController: MainTabBarController(commonStore: commonStore))
+        tabBarViewController.modalPresentationStyle = .overFullScreen
+        view?.present(viewController: tabBarViewController)
+    }
+    
 
     func routeToDashbord(commonStore: CommonStore) {
         let router = DashboardPageRouter(commonStore: commonStore)

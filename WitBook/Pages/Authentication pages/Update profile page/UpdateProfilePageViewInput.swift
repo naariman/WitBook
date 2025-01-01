@@ -14,4 +14,5 @@ protocol UpdateProfilePageViewInput: BaseViewInput {
         _ picker: PhotoSourcePickerViewController,
         didSelect source: UIImagePickerController.SourceType
     )
+    func routeToTabBarPages(commonStore: CommonStore)
 }

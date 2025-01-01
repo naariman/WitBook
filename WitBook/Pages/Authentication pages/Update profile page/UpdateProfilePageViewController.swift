@@ -114,6 +114,9 @@ class UpdateProfilePageViewController: BaseViewController {
         pickerPlacholderView.addTapGesture { [weak self] in
             self?.router?.presentPhotoPickerSourceOptionsBottomSheet()
         }
+        continueButton.addTapGesture {
+            self.interactor?.didTapContinueButton()
+        }
     }
 }
 
@@ -158,6 +161,10 @@ extension UpdateProfilePageViewController: UpdateProfilePageViewInput {
             }
         }
     }
+    
+    func routeToTabBarPages(commonStore: CommonStore) {
+        router?.routeToTabBarPages(commonStore: commonStore)
+    }
 }
 
 extension UpdateProfilePageViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate {
@@ -195,8 +202,8 @@ private extension UpdateProfilePageViewController {
         }
     }
     
-    @objc func didChangeNameTextField(_ text: String?) {
-        interactor?.didChangeNameText(text)
+    @objc func didChangeNameTextField() {
+        interactor?.didChangeNameText(nameTextField.text)
     }
     
     func showPhotoOrCameraAccessAlert() {

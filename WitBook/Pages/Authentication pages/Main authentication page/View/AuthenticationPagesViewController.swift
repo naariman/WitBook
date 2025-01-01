@@ -185,7 +185,7 @@ extension AuthenticationPagesViewController: AuthenticationPagesViewInput {
 private extension AuthenticationPagesViewController {
     
     @objc func didTapContinueButton() {
-        interactor?.didTapPrimaryButton()
+        interactor?.didTapContinueButton()
     }
 
     @objc func didTapNoAccountButton() {

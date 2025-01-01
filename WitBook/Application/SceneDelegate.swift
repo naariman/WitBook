@@ -24,7 +24,7 @@ class SceneDelegate: UIResponder,
 
         let router = UpdateProfilePageRouter(commonStore: commonStore)
         let viewController = router.compose()
-        window.rootViewController = UINavigationController(rootViewController:  MainTabBarController(commonStore: commonStore))
+        window.rootViewController = UINavigationController(rootViewController: viewController)
         window.makeKeyAndVisible()
     }
 }
