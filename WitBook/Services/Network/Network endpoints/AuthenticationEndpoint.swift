@@ -24,7 +24,7 @@ enum AuthenticationEndpoint: NetworkEndpoint {
         case .login:
             return "users/login/"
         case .refresh:
-            return "users/refresh/"
+            return "users/refresh_token/"
         }
     }
     
